@@ -4,16 +4,20 @@ namespace App\Models;
 
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\HasApiTokens;
 
-class Users extends Model implements Authenticatable
+
+class User extends Model
 {
 
     //
 
-    use AuthenticableTrait;
+    use HasApiTokens, AuthenticableTrait;
 
-    protected $fillable = ['username', 'email', 'password', 'userimage'];
+    protected $fillable = ['username', 'email', 'password'];
 
     protected $hidden = [
 

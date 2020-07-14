@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,6 +12,20 @@
 |
  */
 
+
+$router->get('/key', function() {
+    return \Illuminate\Support\Str::random(32);
+});
+
+$router->post('/register','UsersController@register');
+
+$router->group(['prefix' => 'api/oauth', 'middleware' => 'auth'], function() use (&$router){
+    $router->get('/token', function () use ($router) {
+        dd(1);
+    });
+ });
+
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
@@ -22,6 +37,8 @@ $router->get('create_user','Dev\DevController@create_user');
 $router->get('flush_cache', function(){
     Cache::flush();
 });
+
+
 
 $router->group(['prefix' => 'api/'], function ($router) {
     $router->get('login/', 'UsersController@authenticate');
